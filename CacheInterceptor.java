@@ -1,6 +1,4 @@
-package com.kiway.smartclass.student.http;
-
-import com.kiway.smartclass.student.util.Logger;
+package cn.kiway.exam.http;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -32,7 +30,7 @@ public class CacheInterceptor implements Interceptor {
         while ((response == null || !response.isSuccessful()) && count < maxRetry) {
             try {
                 Thread.sleep(nextInterval);
-                Logger.e(":::::::::重试接口:::::::::" + count + ":::::::::" + request.url().toString());
+             //   Logger.e(":::::::::重试接口:::::::::" + count + ":::::::::" + request.url().toString());
             } catch (final InterruptedException e) {
                 Thread.currentThread().interrupt();
                 throw new InterruptedIOException();
@@ -40,7 +38,7 @@ public class CacheInterceptor implements Interceptor {
             count++;
         }
         if (response == null && maxAgeSeconds > 0) {
-            Logger.e(":::::::::需要缓存:::::::::");
+          //  Logger.e(":::::::::需要缓存:::::::::");
             request = request.newBuilder().cacheControl(new CacheControl.Builder()
                     .maxAge(maxStale, TimeUnit.MINUTES).build()).build();
             response = chain.proceed(request);
